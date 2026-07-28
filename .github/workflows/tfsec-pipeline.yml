@@ -1,5 +1,4 @@
 name: Security Quality Gate
-
 on:
   push:
     branches:
@@ -12,15 +11,12 @@ jobs:
   tfsec_scan:
     name: tfsec SAST Scanner
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install tfsec
-        run: |
-          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
-
-      - name: Run tfsec Scan
-        run: |
-          tfsec . --soft-fail=false
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: S20-Quality-Lab
+          soft_fail: false
