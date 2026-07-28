@@ -21,5 +21,5 @@ jobs:
         uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
         with:
           # CRUCIAL - instructs the pipeline to return a non-zero exit code and block deployment
-          tfsec_args: "--soft-fail=false"
+          tfsec_args: --soft-fail=false
           github_token: ${{ secrets.GITHUB_TOKEN }}
