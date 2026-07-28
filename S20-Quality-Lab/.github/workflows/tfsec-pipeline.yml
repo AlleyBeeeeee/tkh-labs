@@ -1,0 +1,19 @@
+name: Security Quality Gate
+#triggers automated workflow when code is pushed to branch
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tfsec_scan:
+    name: tfsec SAST Scanner
+    #spins temp linux virtual runner in Githubs cloud to run checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3 # pulls copy of repo into virtual runner so tools can see code
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0 # runs the tfsec scanner across terra files
+        with:
+          tfsec_args: --soft-fail=false # CRUCIAL - instructs the pipeline to return to non-zero exit code and blocks deployment
+          github_token: ${{ secrets.GITHUB_TOKEN }}
