@@ -1,0 +1,23 @@
+# Local .terraform directory (contains massive provider plugins)
+.terraform/
+
+# Terraform state files (contains private AWS details and current setup state)
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*
+
+# Terraform configuration overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore OS-specific files (like Mac folder properties)
+.DS_Store
