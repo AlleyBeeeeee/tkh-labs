@@ -1,19 +1,25 @@
 name: Security Quality Gate
-#triggers automated workflow when code is pushed to branch
+# Triggers automated workflow when code is pushed to branch
 on:
   push:
     branches:
       - main
+
 jobs:
   tfsec_scan:
     name: tfsec SAST Scanner
-    #spins temp linux virtual runner in Githubs cloud to run checks
+    # Spins temp linux virtual runner in GitHub's cloud to run checks
     runs-on: ubuntu-latest
+
     steps:
+      # Pulls copy of repo into virtual runner so tools can see code
       - name: Checkout Code
-        uses: actions/checkout@v3 # pulls copy of repo into virtual runner so tools can see code
+        uses: actions/checkout@v3
+
+      # Runs the tfsec scanner across terraform files
       - name: Run tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0 # runs the tfsec scanner across terra files
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
         with:
-          tfsec_args: --soft-fail=false # CRUCIAL - instructs the pipeline to return to non-zero exit code and blocks deployment
+          # CRUCIAL - instructs the pipeline to return a non-zero exit code and block deployment
+          tfsec_args: "--soft-fail=false"
           github_token: ${{ secrets.GITHUB_TOKEN }}
