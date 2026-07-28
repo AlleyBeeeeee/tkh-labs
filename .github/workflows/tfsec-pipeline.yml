@@ -11,10 +11,6 @@ jobs:
   tfsec_scan:
     name: tfsec SAST Scanner
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
