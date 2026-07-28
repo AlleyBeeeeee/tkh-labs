@@ -1,0 +1,9 @@
+name: Pulse Check
+on: [push]
+
+jobs:
+  test-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DevSecOps Greeting
+        run: echo "Hello DevSecOps!"
