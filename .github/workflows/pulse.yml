@@ -1,9 +1,28 @@
-name: Pulse Check
-on: [push]
+name: Terraform Plan
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  test-runner:
+  terraform:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./S19-Pipeline-Lab
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-east-1"
     steps:
-      - name: DevSecOps Greeting
-        run: echo "Hello DevSecOps!"
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
