@@ -24,17 +24,18 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::509820673633:role/GitHubActions-OIDC-Role
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - name: Terraform Init
-        working-directory: ./S21-Delivery-Lab
+        working-directory: S21-Delivery-Lab
         run: terraform init
 
       - name: Terraform Plan
-        working-directory: ./S21-Delivery-Lab
+        working-directory: S21-Delivery-Lab
         run: terraform plan
 
       - name: Terraform Apply
-        working-directory: ./S21-Delivery-Lab
+        working-directory: S21-Delivery-Lab
         run: terraform apply -auto-approve
