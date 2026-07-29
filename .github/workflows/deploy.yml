@@ -5,10 +5,9 @@ on:
     branches:
       - main
 
-# Required permissions for OIDC authentication
 permissions:
-  id-token: write # Needed to request the JWT token from GitHub
-  contents: read # Needed to check out your repository code
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
@@ -17,11 +16,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::509820673633:role/GitHubActions-OIDC-Role
           aws-region: us-east-1
 
-      - name: Verify AWS Identity
-        run: aws sts get-caller-identity
+      - name: Terraform Init
+        working-directory: ./S21-Delivery-Lab
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ./S21-Delivery-Lab
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: ./S21-Delivery-Lab
+        run: terraform apply -auto-approve
