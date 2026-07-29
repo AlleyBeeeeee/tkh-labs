@@ -39,3 +39,7 @@ jobs:
       - name: Terraform Apply
         working-directory: S21-Delivery-Lab
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        working-directory: S21-Delivery-Lab
+        run: terraform destroy -auto-approve
