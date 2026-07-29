@@ -1,32 +1,27 @@
-name: Keyless Terraform Deploy
+name: AWS OIDC Deployment
+
 on:
   push:
     branches:
       - main
 
-# REQUIRED FOR OIDC FEDERATION
+# Required permissions for OIDC authentication
 permissions:
-  id-token: write
-  contents: read
+  id-token: write # Needed to request the JWT token from GitHub
+  contents: read # Needed to check out your repository code
 
 jobs:
-  terraform_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::509820673633:role/GitHubActions-OIDC-Role
           aws-region: us-east-1
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
