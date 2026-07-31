@@ -23,13 +23,16 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
+        working-directory: ./TLAB7-Forge
         run: terraform init
 
       - name: SAST Quality Gate (tfsec)
         uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
         with:
           tfsec_args: --soft-fail=false
+          working_directory: TLAB7-Forge
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Terraform Apply
+        working-directory: ./TLAB7-Forge
         run: terraform apply -auto-approve
