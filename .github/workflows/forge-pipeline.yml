@@ -27,10 +27,9 @@ jobs:
         run: terraform init
 
       - name: SAST Quality Gate (tfsec)
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
-        with:
-          tfsec_args: TLAB7-Forge --soft-fail=false
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+          tfsec TLAB7-Forge --soft-fail=false
 
       - name: Terraform Apply
         working-directory: ./TLAB7-Forge
