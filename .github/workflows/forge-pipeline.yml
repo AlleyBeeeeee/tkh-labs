@@ -28,9 +28,9 @@ jobs:
 
       - name: SAST Quality Gate (tfsec)
         run: |
-          wget -q https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64
-          chmod +x tfsec-linux-amd64
-          ./tfsec-linux-amd64 TLAB7-Forge --soft-fail=false
+          wget -q -O tfsec https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64
+          chmod +x tfsec
+          ./tfsec TLAB7-Forge --soft-fail=false
 
       - name: Terraform Apply
         working-directory: ./TLAB7-Forge

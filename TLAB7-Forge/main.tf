@@ -1,15 +1,20 @@
-provider "aws" {  
-  region = "us-east-1"  
-}  
-  
-resource "aws_security_group" "sabotaged_sg" {  
-  name        = "tlab7-exposed-sg"  
-  description = "A dangerously exposed security group"  
-  
-  ingress {  
-    from_port   = 22  
-    to_port     = 22  
-    protocol    = "tcp"  
-    cidr_blocks = ["68.237.55.102/32"] # SABOTAGE: SSH exposed to the world  
-  }  
-}  
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic" # Added description
+
+  ingress {
+    description = "SSH from personal host IP" # Added description
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["68.237.55.102/32"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic" # Added description
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
