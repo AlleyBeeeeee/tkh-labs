@@ -29,6 +29,7 @@ jobs:
       - name: SAST Quality Gate (tfsec)
         uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
         with:
+          working_directory: TLAB7-Forge
           tfsec_args: --soft-fail=false
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
