@@ -1,9 +1,9 @@
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
-  description = "Allow SSH inbound traffic" # Added description
+  description = "Allow SSH inbound traffic"
 
   ingress {
-    description = "SSH from personal host IP" # Added description
+    description = "SSH from personal host IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -11,7 +11,7 @@ resource "aws_security_group" "allow_ssh" {
   }
 
   egress {
-    description = "Allow all outbound traffic" # Added description
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
